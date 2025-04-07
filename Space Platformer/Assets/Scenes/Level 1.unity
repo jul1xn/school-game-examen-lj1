@@ -229,9 +229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1853292358}
-  lerpTime: 0.5
-  xOffset: 5
-  yOffset: 3
+  lerpTime: 2
 --- !u!1 &1485380458
 GameObject:
   m_ObjectHideFlags: 0
