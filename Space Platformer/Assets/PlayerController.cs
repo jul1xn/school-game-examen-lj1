@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     float dashTime;
     bool isDashing;
     bool isGrounded;
+    bool wasGrounded;
     Vector2 velocity;
     Collider2D selfCollider;
 
@@ -88,6 +89,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+
+        if (!wasGrounded && isGrounded)
+        {
+            doubleJump = false;
+        }
+
+        wasGrounded = isGrounded;
 
         if (_wantsToAddForce)
         {
