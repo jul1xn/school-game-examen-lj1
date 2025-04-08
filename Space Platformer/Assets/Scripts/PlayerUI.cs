@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerUI : MonoBehaviour
 {
+    public AudioSource hitAudio;
+    public AudioSource upgradeAudio;
     public int lives;
     public int score;
     [Space]
@@ -35,6 +37,7 @@ public class PlayerUI : MonoBehaviour
     {
         lives--;
         UpdateHeartImages();
+        hitAudio.Play();
 
         if (lives <= 0)
         {
@@ -45,6 +48,7 @@ public class PlayerUI : MonoBehaviour
     public void IncreaseLife()
     {
         lives++;
+        upgradeAudio.Play();
         if (lives > 4) { lives = 4; }
         UpdateHeartImages();
     }

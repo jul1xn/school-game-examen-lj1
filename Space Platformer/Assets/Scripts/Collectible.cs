@@ -9,6 +9,15 @@ public class Collectible : MonoBehaviour
     public float deathAnimationTime;
     public bool destroyOnAnimationEnd = true;
     private bool pickedUp = false;
+    public AudioSource pickupSource;
+
+    private void Start()
+    {
+        if (pickupSource == null)
+        {
+            pickupSource = GetComponent<AudioSource>();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -27,6 +36,7 @@ public class Collectible : MonoBehaviour
     private IEnumerator PickupSequence()
     {
         pickedUp = true;
+        pickupSource.Play();
         animator.SetBool("pickedUp", true);
         yield return new WaitForSeconds(deathAnimationTime);
         if (destroyOnAnimationEnd)

@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public float rgbCycleSpeed;
     public bool rgbPlayer;
     [Space]
+    public AudioSource jumpAudio;
+    public AudioSource dashAudio;
     public bool doubleJump;
     public float doubleJumpHeigtMultiplier;
     [Space]
@@ -87,6 +89,7 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E) && Time.time > dashTime && !isDashing && x != 0f)
         {
+            dashAudio.Play();
             isDashing = true;
             dashTime = Time.time + dashCooldown;
             StartCoroutine(Dash());
@@ -107,6 +110,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    jumpAudio.Play();
                     StartCoroutine(DoubleJumpSequence());
                     velocity.y = jumpHeight * doubleJumpHeigtMultiplier;
                     doubleJump = false;
@@ -116,6 +120,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (isGrounded && Input.GetKeyDown(KeyCode.Space))
                 {
+                    jumpAudio.Play();
                     velocity.y = jumpHeight;
                     doubleJump = true;
                 }

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public AudioSource deathAudio;
     public Animator animator;
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
@@ -126,6 +127,7 @@ public class EnemyController : MonoBehaviour
     private IEnumerator DeathSequence()
     {
         isDead = true;
+        deathAudio.Play();
         animator.SetBool("dead", true);
         PlayerController.instance.AddForce(new Vector2(0f, playerStompJumpForce));
         yield return new WaitForSeconds(0.2f); // Depends on the death animation time
