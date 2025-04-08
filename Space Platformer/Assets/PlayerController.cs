@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     public Rigidbody2D rb;
     public float movementSpeed;
     public float jumpHeight;
@@ -24,6 +25,11 @@ public class PlayerController : MonoBehaviour
     Vector2 velocity;
     Collider2D selfCollider;
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Start()
     {
         dashTime = Time.time;
@@ -34,6 +40,15 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(new Vector3(transform.position.x, transform.position.y - groundCheckOffset, transform.position.z), groundCheckRadius);
+    }
+
+    Vector2 _addedForce;
+    bool _wantsToAddForce;
+
+    public void AddForce(Vector2 force)
+    {
+        _wantsToAddForce = true;
+        _addedForce = force;
     }
 
     private void Update()
@@ -72,6 +87,12 @@ public class PlayerController : MonoBehaviour
                     doubleJump = true;
                 }
             }
+        }
+
+        if (_wantsToAddForce)
+        {
+            _wantsToAddForce = false;
+            velocity += _addedForce;
         }
 
         rb.velocity = velocity;
