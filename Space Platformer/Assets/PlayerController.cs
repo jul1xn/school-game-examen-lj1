@@ -4,6 +4,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
     public Rigidbody2D rb;
     public float movementSpeed;
     public float jumpHeight;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
         velocity = rb.velocity;
 
         float x = Input.GetAxisRaw("Horizontal") * movementSpeed;
+        animator.SetFloat("magnitude", rb.velocity.magnitude);
         
         if (Input.GetKeyDown(KeyCode.E) && Time.time > dashTime && !isDashing && x != 0f)
         {
@@ -69,13 +72,19 @@ public class PlayerController : MonoBehaviour
         if (!isDashing)
         {
             velocity.x = x;
+            if (x != 0f)
+            {
+                spriteRenderer.flipX = x < 0f;
+            }
 
             isGrounded = CheckGround();
+            animator.SetBool("grounded", isGrounded);
 
             if (doubleJump)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    StartCoroutine(DoubleJumpSequence());
                     velocity.y = jumpHeight * doubleJumpHeigtMultiplier;
                     doubleJump = false;
                 }
@@ -104,6 +113,13 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.velocity = velocity;
+    }
+
+    private IEnumerator DoubleJumpSequence()
+    {
+        animator.SetBool("doublejump", true);
+        yield return new WaitForEndOfFrame();
+        animator.SetBool("doublejump", false);
     }
 
     private bool CheckGround()
