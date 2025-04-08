@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public float movementSpeed;
     public float jumpHeight;
+    public float rgbCycleSpeed;
+    public bool rgbPlayer;
     [Space]
     public bool doubleJump;
     public float doubleJumpHeigtMultiplier;
@@ -65,6 +67,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         velocity = rb.velocity;
+        if (rgbPlayer)
+        {
+            spriteRenderer.color = GetCyclingColor(Time.time * rgbCycleSpeed);
+        }
+        else
+        {
+            spriteRenderer.color = Color.white;
+        }
 
         float x = Input.GetAxisRaw("Horizontal") * movementSpeed;
         animator.SetFloat("magnitude", rb.velocity.magnitude);
@@ -140,7 +150,6 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-
     private IEnumerator Dash()
     {
         isDashing = true;
@@ -153,5 +162,14 @@ public class PlayerController : MonoBehaviour
 
         rb.gravityScale = originalGravity;
         isDashing = false;
+    }
+
+    private Color GetCyclingColor(float t)
+    {
+        float r = Mathf.Sin(t + 0f) * 0.5f + 0.5f;
+        float g = Mathf.Sin(t + 2f) * 0.5f + 0.5f;
+        float b = Mathf.Sin(t + 4f) * 0.5f + 0.5f;
+
+        return new Color(r, g, b);
     }
 }

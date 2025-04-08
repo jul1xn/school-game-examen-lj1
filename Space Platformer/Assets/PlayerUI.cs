@@ -13,11 +13,14 @@ public class PlayerUI : MonoBehaviour
     public Image life2;
     public Image life3;
     public Image life4;
+    public GameObject partPopup;
+    public Image part;
 
     private void Start()
     {
         lives = 3;
         UpdateHeartImages();
+        partPopup.SetActive(false);
     }
 
     public void TakeAwayLife()
@@ -50,5 +53,18 @@ public class PlayerUI : MonoBehaviour
     {
         score += increase;
         scoreText.text = score.ToString();
+    }
+
+    public void ShowPartPopup(Sprite sprite)
+    {
+        StartCoroutine(PartPopup(sprite));
+    }
+
+    private IEnumerator PartPopup(Sprite sprite)
+    {
+        part.sprite = sprite;
+        partPopup.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        partPopup.SetActive(false);
     }
 }

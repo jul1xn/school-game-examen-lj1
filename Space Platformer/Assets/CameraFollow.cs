@@ -6,10 +6,12 @@ public class CameraFollow : MonoBehaviour
     public float lerpTime = 0.3f;
 
     float minY;
+    float minX;
 
     private void Start()
     {
         minY = transform.position.y;
+        minX = transform.position.x;
     }
 
     private void LateUpdate()
@@ -18,6 +20,11 @@ public class CameraFollow : MonoBehaviour
         if (targetPos.y < minY)
         {
             targetPos.y = minY;
+        }
+
+        if (targetPos.x < minX)
+        {
+            targetPos.x = minX;
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPos, lerpTime * Time.deltaTime);
