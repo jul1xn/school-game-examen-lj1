@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E) && Time.time > dashTime && !isDashing && x != 0f)
         {
-            Debug.Log("dash");
             isDashing = true;
             dashTime = Time.time + dashCooldown;
             StartCoroutine(Dash());
@@ -136,7 +135,6 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        Debug.Log("dash start");
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0;
@@ -147,6 +145,5 @@ public class PlayerController : MonoBehaviour
 
         rb.gravityScale = originalGravity;
         isDashing = false;
-        Debug.Log("end");
     }
 }
