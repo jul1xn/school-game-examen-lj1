@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController instance;
+    public PlayerUI playerUI;
     public Animator animator;
     public SpriteRenderer spriteRenderer;
     public Rigidbody2D rb;
