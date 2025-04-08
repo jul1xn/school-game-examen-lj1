@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
     public float deathAnimationTime;
     [Space]
     public float movementSpeed;
+    public float detectedMultipler;
 
     float direction;
     private float boundMinX;
@@ -36,6 +37,7 @@ public class EnemyController : MonoBehaviour
     bool isDead;
 
     Vector3 gizmoDrawPosition;
+    float mmspeed;
 
     private void OnDrawGizmosSelected()
     {
@@ -69,33 +71,46 @@ public class EnemyController : MonoBehaviour
         boundMaxX = transform.position.x + sweepRange;
 
         direction = 1;
+        mmspeed = movementSpeed;
     }
 
     private void Update()
     {
-        if (!isDead)
+        if (isDead)
         {
-            if (StompCheck())
-            {
-                StartCoroutine(DeathSequence());
-            }
+            rb.velocity = Vector2.zero;
+            return;
+        }
 
-            if (transform.position.x + forwardsDetectionOffset > boundMaxX ||
-                transform.position.x - forwardsDetectionOffset < boundMinX ||
-                !CheckGround())
-            {
-                direction *= -1;
-            }
+        if (StompCheck())
+        {
+            StartCoroutine(DeathSequence());
+        }
 
-            animator.SetFloat("magnitude", rb.velocity.magnitude);
-            spriteRenderer.flipX = direction == 1;
+        bool playerInRange = CheckRadius();
 
-            rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
+        if (playerInRange)
+        {
+            movementSpeed = mmspeed * detectedMultipler;
+
+            direction = PlayerController.instance.transform.position.x > transform.position.x ? 1 : -1;
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            movementSpeed = mmspeed;
+            if (!CheckGround()
+                || transform.position.x + forwardsDetectionOffset > boundMaxX
+                || transform.position.x - forwardsDetectionOffset < boundMinX)
+            {
+                float center = (boundMinX + boundMaxX) / 2f;
+                direction = center > transform.position.x ? 1 : -1;
+            }
         }
+
+        animator.SetFloat("magnitude", rb.velocity.magnitude);
+        spriteRenderer.flipX = direction == 1;
+
+        rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -106,6 +121,7 @@ public class EnemyController : MonoBehaviour
             PlayerController.instance.playerUI.TakeAwayLife();
         }
     }
+
 
     private IEnumerator DeathSequence()
     {
@@ -138,4 +154,14 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
+    public bool CheckRadius()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange, stompLayer);
+        if (colliders.Length > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -8,6 +8,11 @@ public class PlayerUI : MonoBehaviour
 {
     public int lives;
     public int score;
+    [Space]
+    public GameObject mainUI;
+    public GameObject pauseUI;
+    public GameObject deathUI;
+    [Space]
     public TMP_Text scoreText;
     public Image life1;
     public Image life2;
@@ -18,6 +23,9 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
+        mainUI.SetActive(true);
+        deathUI.SetActive(false);
+        deathUI.SetActive(false);
         lives = 3;
         UpdateHeartImages();
         partPopup.SetActive(false);
@@ -27,6 +35,11 @@ public class PlayerUI : MonoBehaviour
     {
         lives--;
         UpdateHeartImages();
+
+        if (lives <= 0)
+        {
+            KillPlayer();
+        }
     }
 
     public void IncreaseLife()
@@ -66,5 +79,13 @@ public class PlayerUI : MonoBehaviour
         partPopup.SetActive(true);
         yield return new WaitForSeconds(5f);
         partPopup.SetActive(false);
+    }
+
+    public void KillPlayer()
+    {
+        PlayerController.instance.gameObject.SetActive(false);
+        mainUI.SetActive(false);
+        deathUI.SetActive(true);
+        pauseUI.SetActive(false);
     }
 }

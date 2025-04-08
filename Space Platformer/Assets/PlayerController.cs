@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.Mathematics;
+using UnityEditor.Build.Player;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -74,6 +75,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             spriteRenderer.color = Color.white;
+        }
+
+        if (transform.position.y < -6)
+        {
+            playerUI.KillPlayer();
         }
 
         float x = Input.GetAxisRaw("Horizontal") * movementSpeed;
