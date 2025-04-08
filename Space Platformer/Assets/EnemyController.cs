@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ public class EnemyController : MonoBehaviour
     public Animator animator;
     public Rigidbody2D rb;
     public SpriteRenderer spriteRenderer;
+    [Space]
+    public string playerTag;
+    public float playerThrowForce;
     [Space]
     public float sweepRange;
     public float detectionRange;
@@ -91,6 +95,15 @@ public class EnemyController : MonoBehaviour
         else
         {
             rb.velocity = Vector3.zero;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag(playerTag) && !StompCheck())
+        {
+            PlayerController.instance.ThrowPlayer(playerThrowForce);
+            PlayerController.instance.playerUI.TakeAwayLife();
         }
     }
 

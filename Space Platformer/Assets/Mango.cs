@@ -8,7 +8,6 @@ public class Mango : Collectible
 
     public override void OnPickup()
     {
-        base.OnPickup();
         PlayerController.instance.playerUI.UpdateScore(scoreIncrease);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -48,6 +49,12 @@ public class PlayerController : MonoBehaviour
 
     Vector2 _addedForce;
     bool _wantsToAddForce;
+
+    public void ThrowPlayer(float throwForce)
+    {
+        Vector2 force = new Vector2(Mathf.Clamp01(velocity.x) * throwForce, throwForce / 2);
+        AddForce(force);
+    }
 
     public void AddForce(Vector2 force)
     {
