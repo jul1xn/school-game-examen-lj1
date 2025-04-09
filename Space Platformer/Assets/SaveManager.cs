@@ -30,6 +30,7 @@ public class SaveManager : MonoBehaviour
         gameStarted = gs == 1;
         if (!gameStarted)
         {
+            PlayerPrefs.SetInt("score", 0);
             foreach(int i in levelIndexs)
             {
                 PlayerPrefs.SetInt("part_" + (i + 1), 0);
@@ -65,6 +66,7 @@ public class SaveManager : MonoBehaviour
     public void CreateNewSave()
     {
         PlayerPrefs.SetInt("game_started", 1);
+        PlayerPrefs.SetInt("score", 0);
         foreach (int i in levelIndexs)
         {
             PlayerPrefs.SetInt("part_" + (i + 1), 0);

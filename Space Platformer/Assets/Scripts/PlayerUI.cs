@@ -14,6 +14,7 @@ public class PlayerUI : MonoBehaviour
     public GameObject mainUI;
     public GameObject pauseUI;
     public GameObject deathUI;
+    public GameObject completeUI;
     [Space]
     public TMP_Text scoreText;
     public Image life1;
@@ -25,8 +26,11 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
+        score = PlayerPrefs.GetInt("score", 0);
+        scoreText.text = score.ToString();
         mainUI.SetActive(true);
         deathUI.SetActive(false);
+        completeUI.SetActive(false);
         pauseUI.SetActive(false);
         lives = 3;
         UpdateHeartImages();
@@ -116,8 +120,22 @@ public class PlayerUI : MonoBehaviour
         pauseUI.SetActive(false);
     }
 
+    public void CompleteLvl()
+    {
+        int newMangos = PlayerPrefs.GetInt("score", 0) + score;
+        PlayerPrefs.SetInt("score", newMangos);
+        completeUI.SetActive(true);
+        mainUI.SetActive(true);
+        Time.timeScale = 0.0f;
+    }
+
     public void BtnRetry()
     {
         SceneLoader.Instance.LoadScene(SceneLoader.GetCurrentSceneIndex());
+    }
+
+    public void BtnNextLvl()
+    {
+        SceneLoader.Instance.LoadScene(SceneLoader.GetCurrentSceneIndex() + 1);
     }
 }
