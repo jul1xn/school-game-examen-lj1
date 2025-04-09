@@ -16,6 +16,7 @@ public class PlayerUI : MonoBehaviour
     public GameObject deathUI;
     public GameObject completeUI;
     [Space]
+    public TMP_Text foundText;
     public TMP_Text scoreText;
     public Image life1;
     public Image life2;
@@ -126,6 +127,16 @@ public class PlayerUI : MonoBehaviour
     {
         int newMangos = PlayerPrefs.GetInt("score", 0) + score;
         PlayerPrefs.SetInt("score", newMangos);
+
+        if (PlayerPrefs.GetInt("part_" + SceneLoader.GetCurrentSceneIndex() + 1, 0) == 0)
+        {
+            foundText.text = "You didn't find the spaceship part :(";
+        }
+        else
+        {
+            foundText.text = "You found the spaceship part! :D";
+        }
+
         completeUI.SetActive(true);
         mainUI.SetActive(true);
         Time.timeScale = 0.0f;
