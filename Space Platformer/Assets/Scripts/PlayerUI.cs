@@ -127,8 +127,10 @@ public class PlayerUI : MonoBehaviour
     {
         int newMangos = PlayerPrefs.GetInt("score", 0) + score;
         PlayerPrefs.SetInt("score", newMangos);
+        int found = PlayerPrefs.GetInt("part_" + (SceneLoader.GetCurrentSceneIndex() + 1), 0);
+        Debug.Log(found);
 
-        if (PlayerPrefs.GetInt("part_" + SceneLoader.GetCurrentSceneIndex() + 1, 0) == 0)
+        if (found == 0)
         {
             foundText.text = "You didn't find the spaceship part :(";
         }
@@ -156,5 +158,10 @@ public class PlayerUI : MonoBehaviour
     public void BtnNextLvl()
     {
         SceneLoader.Instance.LoadScene(SceneLoader.GetCurrentSceneIndex() + 1);
+    }
+
+    public void BtnMenu()
+    {
+        SceneLoader.Instance.LoadScene(0);
     }
 }
