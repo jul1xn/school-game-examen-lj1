@@ -17,6 +17,7 @@ public class EnemyController : MonoBehaviour
     public float sweepRange;
     public float detectionRange;
     public float forwardsDetectionOffset;
+    public bool requiresGroundCheck = true;
     [Space]
     public LayerMask groundMask;
     public float groundDetectionRange;
@@ -35,7 +36,7 @@ public class EnemyController : MonoBehaviour
     float direction;
     private float boundMinX;
     private float boundMaxX;
-    bool isDead;
+    public bool isDead;
 
     Vector3 gizmoDrawPosition;
     float mmspeed;
@@ -99,12 +100,22 @@ public class EnemyController : MonoBehaviour
         else
         {
             movementSpeed = mmspeed;
-            if (!CheckGround()
-                || transform.position.x + forwardsDetectionOffset > boundMaxX
-                || transform.position.x - forwardsDetectionOffset < boundMinX)
+            if (!requiresGroundCheck || CheckGround())
             {
-                float center = (boundMinX + boundMaxX) / 2f;
-                direction = center > transform.position.x ? 1 : -1;
+                // Only patrol if we're allowed to ignore ground, or ground is detected
+                if (!playerInRange
+                    && (transform.position.x + forwardsDetectionOffset > boundMaxX
+                        || transform.position.x - forwardsDetectionOffset < boundMinX))
+                {
+                    float center = (boundMinX + boundMaxX) / 2f;
+                    direction = center > transform.position.x ? 1 : -1;
+                }
+
+                rb.velocity = new Vector2(direction * movementSpeed, rb.velocity.y);
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
             }
         }
 
@@ -129,6 +140,12 @@ public class EnemyController : MonoBehaviour
         isDead = true;
         deathAudio.Play();
         animator.SetBool("dead", true);
+        if (!PlayerController.instance.isGrounded)
+        {
+            PlayerController.instance.doubleJump = true; // Grant another jump when killed
+        }
+
+
         PlayerController.instance.AddForce(new Vector2(0f, playerStompJumpForce));
         yield return new WaitForSeconds(0.2f); // Depends on the death animation time
         Destroy(gameObject);

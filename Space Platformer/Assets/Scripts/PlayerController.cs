@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     float dashTime;
     bool isDashing;
-    bool isGrounded;
+    public bool isGrounded { get; private set; }
     bool wasGrounded;
     Vector2 velocity;
     Collider2D selfCollider;
