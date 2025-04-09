@@ -15,6 +15,7 @@ public class FallingPlatform : MonoBehaviour
     bool stoodOn;
     float lastWiggle;
     Vector2 basePos;
+    Collider2D platformCollider;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class FallingPlatform : MonoBehaviour
         wiggle = false;
         stoodOn = false;
         basePos = transform.position;
+        platformCollider = GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -57,5 +59,6 @@ public class FallingPlatform : MonoBehaviour
 
         animator.SetBool("off", true);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        platformCollider.enabled = false;
     }
 }
