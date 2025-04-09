@@ -27,10 +27,33 @@ public class PlayerUI : MonoBehaviour
     {
         mainUI.SetActive(true);
         deathUI.SetActive(false);
-        deathUI.SetActive(false);
+        pauseUI.SetActive(false);
         lives = 3;
         UpdateHeartImages();
         partPopup.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && !deathUI.activeSelf)
+        {
+            TogglePause();
+        }
+    }
+
+    public void TogglePause()
+    {
+        mainUI.SetActive(!mainUI.activeSelf);
+        pauseUI.SetActive(!pauseUI.activeSelf);
+
+        if (pauseUI.activeSelf)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
     }
 
     public void TakeAwayLife()
@@ -91,5 +114,10 @@ public class PlayerUI : MonoBehaviour
         mainUI.SetActive(false);
         deathUI.SetActive(true);
         pauseUI.SetActive(false);
+    }
+
+    public void BtnRetry()
+    {
+        SceneLoader.Instance.LoadScene(SceneLoader.GetCurrentSceneIndex());
     }
 }
