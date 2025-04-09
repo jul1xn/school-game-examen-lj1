@@ -51,11 +51,12 @@ public class SaveManager : MonoBehaviour
 
     public void ContinueSave()
     {
-        foreach (int i in levelIndexs)
+        for (int i = levelIndexs.Length - 1; i >= 0; i--)
         {
-            if (PlayerPrefs.GetInt("part_" + i, 0) == 1)
+            int levelIndex = levelIndexs[i];
+            if (PlayerPrefs.GetInt("part_" + levelIndex, 0) == 1)
             {
-                SceneLoader.Instance.LoadScene(i);
+                SceneLoader.Instance.LoadScene(levelIndex);
                 return;
             }
         }

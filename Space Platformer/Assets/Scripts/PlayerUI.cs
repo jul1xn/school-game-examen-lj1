@@ -115,6 +115,7 @@ public class PlayerUI : MonoBehaviour
 
     public void KillPlayer()
     {
+        PlayerPrefs.SetInt("part_" + (SceneLoader.GetCurrentSceneIndex() + 1), 0);
         PlayerController.instance.gameObject.SetActive(false);
         mainUI.SetActive(false);
         deathUI.SetActive(true);
