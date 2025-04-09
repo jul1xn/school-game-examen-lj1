@@ -21,6 +21,6 @@ public class BackgroundMove : MonoBehaviour
             currentX = 0;
         }
 
-        transform.position = new Vector3(startX + currentX, 4f);
+        transform.position = new Vector3(startX + currentX, Camera.main.transform.position.y);
     }
 }
