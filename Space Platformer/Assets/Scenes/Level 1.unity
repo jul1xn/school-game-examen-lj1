@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 167158390}
   - component: {fileID: 167158389}
   - component: {fileID: 167158388}
+  - component: {fileID: 167158391}
   m_Layer: 0
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -546,6 +547,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167158386}
   m_CullTransparentMesh: 1
+--- !u!114 &167158391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167158386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8121b3e7a41cb438fd149401626594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpTime: 5
 --- !u!1 &256344139
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,6 +782,7 @@ GameObject:
   - component: {fileID: 314144396}
   - component: {fileID: 314144395}
   - component: {fileID: 314144394}
+  - component: {fileID: 314144397}
   m_Layer: 0
   m_Name: RetryBtn
   m_TagString: Untagged
@@ -888,6 +904,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 314144392}
   m_CullTransparentMesh: 1
+--- !u!114 &314144397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314144392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8121b3e7a41cb438fd149401626594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpTime: 5
 --- !u!1 &322597164
 GameObject:
   m_ObjectHideFlags: 0
@@ -4946,6 +4976,7 @@ GameObject:
   - component: {fileID: 1598764210}
   - component: {fileID: 1598764209}
   - component: {fileID: 1598764208}
+  - component: {fileID: 1598764211}
   m_Layer: 0
   m_Name: RetryBtn
   m_TagString: Untagged
@@ -5067,6 +5098,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598764206}
   m_CullTransparentMesh: 1
+--- !u!114 &1598764211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598764206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8121b3e7a41cb438fd149401626594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpTime: 5
 --- !u!1 &1655575365
 GameObject:
   m_ObjectHideFlags: 0
@@ -5290,6 +5335,7 @@ GameObject:
   - component: {fileID: 1714608685}
   - component: {fileID: 1714608684}
   - component: {fileID: 1714608683}
+  - component: {fileID: 1714608686}
   m_Layer: 0
   m_Name: ContinueBtn
   m_TagString: Untagged
@@ -5411,6 +5457,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714608681}
   m_CullTransparentMesh: 1
+--- !u!114 &1714608686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714608681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8121b3e7a41cb438fd149401626594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpTime: 5
 --- !u!1 &1731300155
 GameObject:
   m_ObjectHideFlags: 0
@@ -6063,6 +6123,7 @@ GameObject:
   - component: {fileID: 2088750254}
   - component: {fileID: 2088750253}
   - component: {fileID: 2088750252}
+  - component: {fileID: 2088750255}
   m_Layer: 0
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -6172,6 +6233,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088750250}
   m_CullTransparentMesh: 1
+--- !u!114 &2088750255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088750250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8121b3e7a41cb438fd149401626594, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleMultiplier: 1.1
+  lerpTime: 5
 --- !u!1 &2106550691
 GameObject:
   m_ObjectHideFlags: 0
