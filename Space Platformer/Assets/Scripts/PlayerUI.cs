@@ -120,6 +120,8 @@ public class PlayerUI : MonoBehaviour
         pauseUI.SetActive(false);
     }
 
+    bool lvlCompleted = false;
+
     public void CompleteLvl()
     {
         int newMangos = PlayerPrefs.GetInt("score", 0) + score;
@@ -127,10 +129,16 @@ public class PlayerUI : MonoBehaviour
         completeUI.SetActive(true);
         mainUI.SetActive(true);
         Time.timeScale = 0.0f;
+        lvlCompleted = true;
     }
 
     public void BtnRetry()
     {
+        if (lvlCompleted)
+        {
+            int newMangos = PlayerPrefs.GetInt("score", 0) - score;
+            PlayerPrefs.SetInt("score", newMangos);
+        }
         SceneLoader.Instance.LoadScene(SceneLoader.GetCurrentSceneIndex());
     }
 
