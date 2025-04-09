@@ -72,7 +72,7 @@ public class EnemyController : MonoBehaviour
         boundMinX = transform.position.x - sweepRange;
         boundMaxX = transform.position.x + sweepRange;
 
-        direction = 1;
+        direction = Random.Range(0, 2) == 0 ? -1 : 1;
         mmspeed = movementSpeed;
     }
 
