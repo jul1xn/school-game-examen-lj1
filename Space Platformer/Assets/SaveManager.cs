@@ -51,17 +51,22 @@ public class SaveManager : MonoBehaviour
 
     public void ContinueSave()
     {
-        for (int i = levelIndexs.Length - 1; i >= 0; i--)
+        int targetLvl = introLvl;
+
+        foreach (int levelIndex in levelIndexs)
         {
-            int levelIndex = levelIndexs[i];
-            if (PlayerPrefs.GetInt("part_" + levelIndex, 0) == 1)
+            int playerprefInt = PlayerPrefs.GetInt("part_" + (levelIndex + 1), 0);
+            if (playerprefInt == 1)
             {
-                SceneLoader.Instance.LoadScene(levelIndex);
-                return;
+                if (levelIndex > targetLvl)
+                {
+                    targetLvl = levelIndex;
+                }
             }
         }
 
-        SceneLoader.Instance.LoadScene(introLvl);
+        Debug.Log("Continuing to highest unlocked level: " + targetLvl+1);
+        SceneLoader.Instance.LoadScene(targetLvl+1);
     }
 
     public void CreateNewSave()
@@ -74,6 +79,23 @@ public class SaveManager : MonoBehaviour
             Debug.Log("set for " + (i + 1));
         }
         SceneLoader.Instance.LoadScene(introLvl);
+    }
+
+    public bool HasFoundAllParts()
+    {
+        foreach (int levelIndex in levelIndexs)
+        {
+            int partKey = levelIndex + 1;
+            Debug.Log("Checking: part_" + partKey);
+            int id = PlayerPrefs.GetInt("part_" + partKey, 0);
+            Debug.Log("Value: " + id);
+            if (id == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void AssignBtn(Button b)
