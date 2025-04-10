@@ -11,6 +11,10 @@ public class PlayerUI : MonoBehaviour
     public int lives;
     public int score;
     [Space]
+    public TMP_Text stopwatchText;
+    private float elapsedTime = 0f;
+    private bool stopwatchRunning = false;
+    [Space]
     public GameObject mainUI;
     public GameObject pauseUI;
     public GameObject deathUI;
@@ -18,6 +22,7 @@ public class PlayerUI : MonoBehaviour
     [Space]
     public TMP_Text foundText;
     public TMP_Text scoreText;
+    public TMP_Text timeText;
     public Image life1;
     public Image life2;
     public Image life3;
@@ -27,6 +32,7 @@ public class PlayerUI : MonoBehaviour
 
     private void Start()
     {
+        stopwatchRunning = true;
         score = PlayerPrefs.GetInt("score", 0);
         scoreText.text = score.ToString();
         mainUI.SetActive(true);
@@ -44,6 +50,21 @@ public class PlayerUI : MonoBehaviour
         {
             TogglePause();
         }
+
+        if (stopwatchRunning)
+        {
+            elapsedTime += Time.deltaTime;
+            stopwatchText.text = FormattedTime(elapsedTime);
+        }
+    }
+
+    public static string FormattedTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60);
+        int milliseconds = Mathf.FloorToInt((time * 100f) % 100);
+
+        return string.Format("{0:D2}:{1:D2};{2:D2}", minutes, seconds, milliseconds);
     }
 
     public void TogglePause()
@@ -115,6 +136,7 @@ public class PlayerUI : MonoBehaviour
 
     public void KillPlayer()
     {
+        stopwatchRunning = false;
         PlayerPrefs.SetInt("part_" + (SceneLoader.GetCurrentSceneIndex() + 1), 0);
         PlayerController.instance.gameObject.SetActive(false);
         mainUI.SetActive(false);
@@ -126,6 +148,7 @@ public class PlayerUI : MonoBehaviour
 
     public void CompleteLvl()
     {
+        stopwatchRunning = false;
         int newMangos = PlayerPrefs.GetInt("score", 0) + score;
         PlayerPrefs.SetInt("score", newMangos);
         int found = PlayerPrefs.GetInt("part_" + (SceneLoader.GetCurrentSceneIndex() + 1), 0);
@@ -133,10 +156,20 @@ public class PlayerUI : MonoBehaviour
 
         if (found == 0)
         {
+            timeText.text = "";
             foundText.text = "You didn't find the spaceship part :(";
         }
         else
         {
+            timeText.text = $"Time: {FormattedTime(elapsedTime)}";
+            string lvlString = "level_" + SceneLoader.GetCurrentSceneIndex();
+            float value = PlayerPrefs.GetFloat(lvlString, float.MaxValue);
+            if (value > elapsedTime)
+            {
+                PlayerPrefs.SetFloat(lvlString, elapsedTime);
+                timeText.text += " (New high score!)";
+            }
+
             foundText.text = "You found the spaceship part! :D";
         }
 
