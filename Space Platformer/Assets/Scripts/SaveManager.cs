@@ -1,0 +1,105 @@
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class SaveManager : MonoBehaviour
+{
+    public static SaveManager instance;
+    public int[] levelIndexs;
+    public int introLvl = 1;
+    private bool gameStarted = false;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        instance = this;
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        int gs = PlayerPrefs.GetInt("game_started", 0);
+        gameStarted = gs == 1;
+        if (!gameStarted)
+        {
+            PlayerPrefs.SetInt("score", 0);
+            foreach(int i in levelIndexs)
+            {
+                PlayerPrefs.SetInt("part_" + (i + 1), 0);
+                Debug.Log("set for " + (i + 1));
+            }
+        }
+    }
+
+    public void OnApplicationQuit()
+    {
+        int index = SceneManager.GetActiveScene().buildIndex;
+        if (index > 1)
+        {
+            // Detected that player is cheating and setting back part collected
+            PlayerPrefs.SetInt("part_" + (index + 1), 0);
+        }
+    }
+
+    public void ContinueSave()
+    {
+        int targetLvl = introLvl;
+
+        foreach (int levelIndex in levelIndexs)
+        {
+            int playerprefInt = PlayerPrefs.GetInt("part_" + (levelIndex + 1), 0);
+            if (playerprefInt == 1)
+            {
+                if (levelIndex > targetLvl)
+                {
+                    targetLvl = levelIndex;
+                }
+            }
+        }
+
+        Debug.Log("Continuing to highest unlocked level: " + targetLvl+1);
+        SceneLoader.Instance.LoadScene(targetLvl+1);
+    }
+
+    public void CreateNewSave()
+    {
+        PlayerPrefs.SetInt("game_started", 1);
+        PlayerPrefs.SetInt("score", 0);
+        foreach (int i in levelIndexs)
+        {
+            PlayerPrefs.SetInt("part_" + (i + 1), 0);
+            Debug.Log("set for " + (i + 1));
+        }
+        SceneLoader.Instance.LoadScene(introLvl);
+    }
+
+    public bool HasFoundAllParts()
+    {
+        foreach (int levelIndex in levelIndexs)
+        {
+            int partKey = levelIndex + 1;
+            Debug.Log("Checking: part_" + partKey);
+            int id = PlayerPrefs.GetInt("part_" + partKey, 0);
+            Debug.Log("Value: " + id);
+            if (id == 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void AssignBtn(Button b)
+    {
+        b.interactable = gameStarted;
+    }
+}
