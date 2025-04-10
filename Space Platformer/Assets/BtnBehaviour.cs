@@ -10,12 +10,18 @@ public class BtnBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     Vector3 baseScale;
     Vector3 targetScale;
     bool setScale = false;
+    AudioSource source;
 
     private void Start()
     {
         baseScale = transform.localScale;
         targetScale = baseScale;
         setScale = true;
+
+        source = gameObject.AddComponent<AudioSource>();
+        source.clip = Resources.Load<AudioClip>("hover");
+        source.volume = 0.02f;
+        source.playOnAwake = false;
     }
 
     private void OnEnable()
@@ -33,6 +39,7 @@ public class BtnBehaviour : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData data)
     {
+        source.Play();
         targetScale = baseScale * scaleMultiplier;
     }
 
