@@ -1,6 +1,4 @@
 using System.Collections;
-using Unity.Mathematics;
-using UnityEditor.Build.Player;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
